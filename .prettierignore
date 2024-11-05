@@ -1,0 +1,12 @@
+# Direktori node_modules
+node_modules/
+
+# Direktori build
+build/
+dist/
+
+# File lingkungan
+.env
+
+# Log
+*.log

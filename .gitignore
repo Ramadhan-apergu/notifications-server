@@ -1,0 +1,50 @@
+# Direktori node_modules menyimpan semua dependency Node.js
+node_modules/
+
+# File log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Direktori hasil build/kompilasi
+dist/
+build/
+
+# File lingkungan/konfigurasi lokal
+.env
+.env.*.local
+
+# Output oleh Editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Direktori cache
+.cache/
+.next/
+out/
+tmp/
+
+# Direktori coverage (hasil tes)
+coverage/
+
+# Direktori hasil tersimpan webpack dan bundler lainnya
+/.pnp
+.pnp.js
+.eslintcache
+.parcel-cache
+.cache-loader
+
+# File atau direktori sementara
+*.temp
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Direktori file konfigurasi Docker
+docker-compose.override.yml
+
+# Direktori Hasil Tersimpan
+*.log
