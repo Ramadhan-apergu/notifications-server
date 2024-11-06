@@ -10,7 +10,7 @@ const emitNotification = async () => {
     if (io) {
       const search = '';
       const page = 1;
-      const limit = 10;
+      const limit = 50;
       const offset = (page - 1) * limit;
 
       const data = await notificationModel.getNotificationsWithPagination(

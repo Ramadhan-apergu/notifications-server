@@ -6,7 +6,7 @@ const getNotifications = async (req, res, next) => {
   try {
     const search = req.query.search || '';
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = 50;
     const offset = (page - 1) * limit;
     const filter = req.query.filter || '';
 
