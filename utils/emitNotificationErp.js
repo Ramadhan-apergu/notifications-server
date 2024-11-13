@@ -5,20 +5,20 @@ const setSocket = (socketIo) => {
   io = socketIo;
 };
 
-const emitNotification = async () => {
+const emitNotificationErp = async () => {
   try {
     if (io) {
-      const search = '';
       const page = 1;
       const limit = 50;
       const offset = (page - 1) * limit;
 
-      const data = await notificationModel.getNotificationsWithPagination(
-        search,
+      const data = await notificationModel.getNotificationErpWithPagination(
+        '',
         limit,
-        offset
+        offset,
+        ''
       );
-      const totalData = await notificationModel.getTotalNotifications(search);
+      const totalData = await notificationModel.getTotalNotifications('', '', 'erp');
 
       const totalPages = Math.ceil(totalData / limit);
 
@@ -29,12 +29,12 @@ const emitNotification = async () => {
         data,
       };
 
-      io.emit('notification:list', notification);
+      io.emit('notification-erp:list', notification);
     }
   } catch (error) {
     console.log('Emit gagal ', error.message);
   }
 };
 
-module.exports = emitNotification;
+module.exports = emitNotificationErp;
 module.exports.setSocket = setSocket;

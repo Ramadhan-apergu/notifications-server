@@ -1,6 +1,10 @@
 const notificationModel = require('../models/notificationModel');
 const getDateNow = require('../utils/getDateNow');
-const emitNotification = require('../utils/socketUtils');
+const emitNotification = require('../utils/emitNotification');
+const emitNotificationCrm = require('../utils/emitNotificationCrm');
+const emitNotificationErp = require('../utils/emitNotificationErp');
+const emitNotificationDashboard = require('../utils/emitNotificationDashboard');
+
 
 const getNotifications = async (req, res, next) => {
   try {
@@ -18,7 +22,8 @@ const getNotifications = async (req, res, next) => {
     );
     const totalData = await notificationModel.getTotalNotifications(
       search,
-      filter
+      filter,
+      ''
     );
 
     const totalPages = Math.ceil(totalData / limit);
@@ -59,6 +64,9 @@ const addNotifications = async (req, res, next) => {
     }
 
     await emitNotification();
+    await emitNotificationCrm();
+    await emitNotificationErp();
+    await emitNotificationDashboard()
 
     res.status(201).json({ message: 'Create data Successfully!' });
   } catch (error) {
@@ -66,7 +74,86 @@ const addNotifications = async (req, res, next) => {
   }
 };
 
+const getNotificationCrm = async (req, res, next) => {
+  try {
+    const search = req.query.search || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 50;
+    const offset = (page - 1) * limit;
+    const filter = req.query.filter || '';
+
+    const data = await notificationModel.getNotificationCrmWithPagination(
+      search,
+      limit,
+      offset,
+      filter
+    );
+    const totalData = await notificationModel.getTotalNotifications(
+      search,
+      filter,
+      'crm'
+    );
+
+    const totalPages = Math.ceil(totalData / limit);
+
+    res.status(200).json({
+      page,
+      totalPages,
+      totalData,
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getNotificationErp = async (req, res, next) => {
+  try {
+    const search = req.query.search || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 50;
+    const offset = (page - 1) * limit;
+    const filter = req.query.filter || '';
+
+    const data = await notificationModel.getNotificationErpWithPagination(
+      search,
+      limit,
+      offset,
+      filter
+    );
+
+    const totalData = await notificationModel.getTotalNotifications(
+      search,
+      filter,
+      'erp'
+    );
+
+    const totalPages = Math.ceil(totalData / limit);
+
+    res.status(200).json({
+      page,
+      totalPages,
+      totalData,
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getNotificationDashboard = async (req, res, next) => {
+  try {
+    const result = await notificationModel.getDataDashboard()
+    res.status(200).json(result)
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getNotifications,
   addNotifications,
+  getNotificationCrm,
+  getNotificationErp,
+  getNotificationDashboard
 };
