@@ -195,7 +195,13 @@ const getDataDashboard = async () => {
           SUM(CASE WHEN type = 'waiting' THEN 1 ELSE 0 END) AS total_waiting,
           SUM(CASE WHEN type = 'success' THEN 1 ELSE 0 END) AS total_success,
           SUM(CASE WHEN source = 'erp' THEN 1 ELSE 0 END) AS total_erp,
-          SUM(CASE WHEN source = 'crm' THEN 1 ELSE 0 END) AS total_crm
+          SUM(CASE WHEN source = 'crm' THEN 1 ELSE 0 END) AS total_crm,
+          SUM(CASE WHEN type = 'error' AND source = 'crm' THEN 1 ELSE 0 END) AS total_error_crm,
+          SUM(CASE WHEN type = 'error' AND source = 'erp' THEN 1 ELSE 0 END) AS total_error_erp,
+          SUM(CASE WHEN type = 'waiting' AND source = 'crm' THEN 1 ELSE 0 END) AS total_waiting_crm,
+          SUM(CASE WHEN type = 'waiting' AND source = 'erp' THEN 1 ELSE 0 END) AS total_waiting_erp,
+          SUM(CASE WHEN type = 'success' AND source = 'crm' THEN 1 ELSE 0 END) AS total_success_crm,
+          SUM(CASE WHEN type = 'success' AND source = 'erp' THEN 1 ELSE 0 END) AS total_success_erp
       FROM 
           notifications;`
     )
